@@ -18,7 +18,7 @@ uint PhysicalMemory::nbFrames()const
 void PhysicalMemory::read(uint frame_number, uint offset, char * data)
 {
     //TP2_IFT2245_TO_DO
-        data+offset=this->mFrames[frame_number].read(offset ,data);
+    this->mFrames[frame_number].read(offset ,data);
 
     //TP2_IFT2245_END_TO_DO
 }
