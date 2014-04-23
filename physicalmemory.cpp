@@ -27,7 +27,7 @@ void PhysicalMemory::write(uint frame_number, uint offset, char * data)
 {
     //TP2_IFT2245_TO_DO
         this->mFrames[frame_number].write(offset,data);
-
+        this->mFrames[frame_number].setModified();
     //TP2_IFT2245_END_TO_DO
 }
 
@@ -58,9 +58,9 @@ QByteArray * PhysicalMemory::frame(uint frame_number)
     return mFrames[frame_number].frameData();
 }
 
-uint PhysicalMemory::pageNumber(uint frame_nuumber)
+uint PhysicalMemory::pageNumber(uint frame_number)
 {
-    return mFrames[frame_nuumber].pageNumber();
+    return mFrames[frame_number].pageNumber();
 }
 
 void PhysicalMemory::setModified(uint frame_number)
