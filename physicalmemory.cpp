@@ -18,14 +18,18 @@ uint PhysicalMemory::nbFrames()const
 void PhysicalMemory::read(uint frame_number, uint offset, char * data)
 {
     //TP2_IFT2245_TO_DO
-
+    for (int i =0;i<offset;i++){
+        data+offset=this->mFrames[frame_number]+offset;
+    }
     //TP2_IFT2245_END_TO_DO
 }
 
 void PhysicalMemory::write(uint frame_number, uint offset, char * data)
 {
     //TP2_IFT2245_TO_DO
-
+    for (int i =0;i<offset;i++){
+        this->mFrames[frame_number]+offset=data+offset;
+    }
     //TP2_IFT2245_END_TO_DO
 }
 
@@ -33,7 +37,7 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
 {
     //TP2_IFT2245_TO_DO
     //If there is an empty frame
-
+    this->insertFrame(this->mNextEmptyFrame, page_number , frame_bytes);
     //TP2_IFT2245_END_TO_DO
 }
 
