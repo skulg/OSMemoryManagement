@@ -18,18 +18,16 @@ uint PhysicalMemory::nbFrames()const
 void PhysicalMemory::read(uint frame_number, uint offset, char * data)
 {
     //TP2_IFT2245_TO_DO
-    for (int i =0;i<offset;i++){
-        data+offset=this->mFrames[frame_number]+offset;
-    }
+        data+offset=this->mFrames[frame_number].read(offset ,data);
+
     //TP2_IFT2245_END_TO_DO
 }
 
 void PhysicalMemory::write(uint frame_number, uint offset, char * data)
 {
     //TP2_IFT2245_TO_DO
-    for (int i =0;i<offset;i++){
-        this->mFrames[frame_number]+offset=data+offset;
-    }
+        this->mFrames[frame_number].write(offset,data);
+
     //TP2_IFT2245_END_TO_DO
 }
 
