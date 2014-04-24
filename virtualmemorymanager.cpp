@@ -7,8 +7,8 @@ float VirtualMemoryManager::PAGEFOUND = 0;
 
 VirtualMemoryManager::VirtualMemoryManager(QString str, uint nb_pages, uint page_size, uint nb_frames):
     TObject(str),mNbPages(nb_pages),mPageSize(page_size),mNbFrames(nb_frames)/*,
-    mRdNumberDistribution(uniform_int_distribution<int>(0,nb_frames-1)),
-    dice(std::bind ( mRdNumberDistribution, mRdNumberGenerator ))*/
+            mRdNumberDistribution(uniform_int_distribution<int>(0,nb_frames-1)),
+            dice(std::bind ( mRdNumberDistribution, mRdNumberGenerator ))*/
 {
     cout<<"Virtual Memory Initialization"<<endl;
 
@@ -58,7 +58,7 @@ void VirtualMemoryManager::outputToLog( char* data )
     cout << "Read Data: " << *data << endl;
     QByteArray page;
     page.resize(1);
-        page[0]=*data;
+    page[0]=*data;
     mLogFile->write(data, 1);
 
 }
@@ -66,7 +66,10 @@ void VirtualMemoryManager::outputToLog( char* data )
 void VirtualMemoryManager::saveRAMToDisk()
 {
     //TP2_IFT2245_TO_DO
-
+    for (uint i=0 ; i<this->mPhysicalMemory->nbFrames();i++){
+        QByteArray *currentData= this->mPhysicalMemory->frame(i);
+        this->mHardDrive->write(i , currentData);
+    }
     //TP2_IFT2245_END_TO_DO
 }
 
@@ -104,6 +107,8 @@ uint VirtualMemoryManager::fetchPage(uint page_number)
         }else{
             this->PAGEFAULT++;
             //Still need to implement fetch from hardDrive on not Found
+            QByteArray *data= this->mHardDrive->read(page_number);
+            this->mPhysicalMemory->insertFrameInNextFreeSpace(page_number, data);
         }
 
     }
