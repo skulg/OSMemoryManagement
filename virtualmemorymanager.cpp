@@ -95,8 +95,19 @@ uint VirtualMemoryManager::fetchPage(uint page_number)
     //TP2_IFT2245_TO_DO
     int frameIndexSearchResult;
     if (this->mTLB->findPage(page_number,frameIndexSearchResult)){
-        this->mPageTable
+        this->PAGEFOUND++;
+        return frameIndexSearchResult;
+    }else{
+        if(this->mPageTable->frameIndex(page_number , frameIndexSearchResult)){
+            this->PAGEFOUND++;
+            return frameIndexSearchResult;
+        }else{
+            this->PAGEFAULT++;
+            //Still need to implement fetch from hardDrive on not Found
+        }
+
     }
+
 
 
     return 0;
