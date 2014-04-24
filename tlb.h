@@ -2,6 +2,7 @@
 #define TLB_H
 
 #include <object.h>
+#include <qlinkedlist.h>
 
 /**
  * @brief The TLB class
@@ -50,9 +51,20 @@ public:
      */
     bool findPage(int page_number, int& frame_index);
 
+    void printList();
+
 private:
 
+    int MAXIMUM_NUMBER_OF_ENTRIES   = 16;
+    int REPLACEMENT_STRATEGY_FIFO   = 0;
+    int REPLACEMENT_STRATEGY_LRU    = 1;
+    int REPLACEMENT_STRATEGY        = REPLACEMENT_STRATEGY_LRU;
+
     TLB_entry _TLBArray[16];
+
+    QLinkedList<TLB_entry> _TlbList;
+    QLinkedList<TLB_entry>::iterator _TlbListIterator;
+
     int _previousEntry;
 };
 

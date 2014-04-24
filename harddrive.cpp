@@ -7,7 +7,7 @@ HardDrive::HardDrive(QString str, uint nb_pages, uint page_size):
     mBackupFile = new QFile(str);
     if(!mBackupFile->open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        cerr<<"Could not open "<<mBackupFile->fileName().toStdString()<<endl;
+        cerr << "Could not open '" << mBackupFile->fileName().toStdString() << "'" << endl;
         assert(false);
         return;
     }

@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     command.cpp \
     commandmanager.cpp \
     page.cpp \
-    frame.cpp
+    frame.cpp \
+    linkedlisttest.cpp
 
 HEADERS += \
     harddrive.h \
@@ -37,4 +38,8 @@ HEADERS += \
     command.h \
     commandmanager.h \
     page.h \
-    frame.h
+    frame.h \
+    linkedlisttest.h
+
+OTHER_FILES += \
+    Hard_Drive
