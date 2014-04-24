@@ -110,9 +110,10 @@ uint VirtualMemoryManager::fetchPage(uint page_number)
     //TP2_IFT2245_TO_DO
     int frameIndexSearchResult;
     if (this->mTLB->findPage(page_number,frameIndexSearchResult)){
-        this->PAGEFOUND++;
+        this->TLBHIT++;
         return frameIndexSearchResult;
     }else{
+        this->TLBMISS++;
         if(this->mPageTable->frameIndex(page_number , frameIndexSearchResult)){
             this->PAGEFOUND++;
             return frameIndexSearchResult;
