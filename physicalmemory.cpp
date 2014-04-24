@@ -42,6 +42,7 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
         this->mNextEmptyFrame++;
         return frameToInsert;
     }else{
+        //FIFO
         this->insertFrame(this->mFirstInIndex, page_number , frame_bytes);
         uint resultIndex =mFirstInIndex;
         this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
