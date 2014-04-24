@@ -3,6 +3,7 @@
 PhysicalMemory::PhysicalMemory(QString str, uint nb_frames):TObject(str),mNbFrames(nb_frames),mNextEmptyFrame(0)
 {
     mFrames = new Frame[nb_frames];
+    mFirstInIndex = 0 ;
 }
 
 PhysicalMemory::~PhysicalMemory()
@@ -35,7 +36,18 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
 {
     //TP2_IFT2245_TO_DO
     //If there is an empty frame
-    this->insertFrame(this->mNextEmptyFrame, page_number , frame_bytes);
+    if(this->hasEmptyFrame()){
+        uint frameToInsert = this->mNextEmptyFrame;
+        this->insertFrame(frameToInsert, page_number , frame_bytes);
+        this->mNextEmptyFrame++;
+        return frameToInsert;
+    }else{
+        this->insertFrame(this->mFirstInIndex, page_number , frame_bytes);
+        uint resultIndex =mFirstInIndex;
+        this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
+        return resultIndex;
+    }
+
     //TP2_IFT2245_END_TO_DO
 }
 

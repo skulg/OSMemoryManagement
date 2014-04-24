@@ -96,7 +96,7 @@ public:
 private :
     uint mNbFrames;
     uint mNextEmptyFrame;
-
+    uint mFirstInIndex;
     Frame *mFrames;
 };
 

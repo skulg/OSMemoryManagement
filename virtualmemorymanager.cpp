@@ -106,9 +106,9 @@ uint VirtualMemoryManager::fetchPage(uint page_number)
             return frameIndexSearchResult;
         }else{
             this->PAGEFAULT++;
-            //Still need to implement fetch from hardDrive on not Found
+            //Fetch from hardrive
             QByteArray *data= this->mHardDrive->read(page_number);
-            this->mPhysicalMemory->insertFrameInNextFreeSpace(page_number, data);
+            return this->mPhysicalMemory->insertFrameInNextFreeSpace(page_number, data);
         }
 
     }
