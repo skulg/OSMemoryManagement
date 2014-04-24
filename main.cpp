@@ -8,7 +8,7 @@ typedef VirtualMemoryManager VMM;
 int main(/*int argc, char *argv[]*/)
 {
 
-    TLB* myTLB = new TLB("Translation Look-aside Buffer");
+/*    TLB* myTLB = new TLB("Translation Look-aside Buffer");
 
     for(int p = 0; p < 16; ++p)
     {
@@ -60,7 +60,8 @@ int main(/*int argc, char *argv[]*/)
 
     myTLB->printList();
 
-    exit(0);
+    exit(0);*/
+
     srand(2245);
     cout<<"\n##############################\n\nStarting Virtual Memory Manager ..."<<endl;
 
@@ -82,6 +83,12 @@ int main(/*int argc, char *argv[]*/)
     }
     cmd_manager.applyCommands();
 
+    // TEMP
+    cout << " TLB_HIT : " << VMM::TLBHIT << endl;
+    cout << " TLB_MISS : " << VMM::TLBMISS << endl;
+    cout << " PAGEFAULT : " << VMM::PAGEFAULT << endl;
+    cout << " PAGEFOUND : " << VMM::PAGEFOUND << endl;
+    // END TEMP
 
     /*Printing static TBLHIT and PAGEFAULT counter from VirtualMemoryManager*/
     cout << "TLB hit ratio: " << VMM::TLBHIT / (VMM::TLBHIT+VMM::TLBMISS)

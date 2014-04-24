@@ -79,6 +79,12 @@ void VirtualMemoryManager::read(uint page_number, uint offset, char *data)
     cout<<"Read Operation : ";
     //TP2_IFT2245_TO_DO
 
+    int pageNumberInMemory  = fetchPage(page_number);
+
+    this->mPhysicalMemory->read(pageNumberInMemory, offset, data);
+
+    cout << "Page number is " << pageNumberInMemory << endl;
+
     //TP2_IFT2245_END_TO_DO
 
     //Do not remove this function
@@ -89,6 +95,12 @@ void VirtualMemoryManager::write(uint page_number, uint offset, char *data)
 {
     cout<<"Write Operation : ";
     //TP2_IFT2245_TO_DO
+
+    int pageNumberInMemory  = fetchPage(page_number);
+
+    cout << "Page number is " << pageNumberInMemory << endl;
+
+    this->mPhysicalMemory->write(pageNumberInMemory, offset, data);
 
     //TP2_IFT2245_END_TO_DO
 }
