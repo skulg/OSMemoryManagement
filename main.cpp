@@ -72,16 +72,36 @@ int main(/*int argc, char *argv[]*/)
     char random_chars;
     for(int i=0; i < nb_commands; ++i)
     {
+        int frameIndex=rand()%256;
         Command::ActionType action_type = Command::READ;
-        if((rand()%100)>50)
+        if(false)//(rand()%100)>50)
         {
             action_type = Command::WRITE;
             random_chars =  (char)(rand() % ('z' - 'a' + 1) + 'a');
         }
         //Command c("Command",action_type,( (rand()%32))*(rand()%16),rand()%256, random_chars );
-        Command c("Command",action_type,0,rand()%256, random_chars );
+        Command c("Command",action_type,i,frameIndex, random_chars );
         cmd_manager.insertCommand(c);
+
+        if(0 == i)
+        {
+            Command cz("Command",Command::WRITE,i,frameIndex, '@');
+            cmd_manager.insertCommand(cz);
+        }
     }
+    // miss
+    Command c1("Command",Command::READ,0,rand()%256, 'x');
+    cmd_manager.insertCommand(c1);
+
+    // TLB hit
+    Command c("Command",Command::READ,250,rand()%256, 'x');
+    cmd_manager.insertCommand(c);
+
+    // TLB miss, page found
+    Command c2("Command",Command::READ,200,rand()%256, 'x');
+    cmd_manager.insertCommand(c2);
+
+
     cmd_manager.applyCommands();
 
     // TEMP

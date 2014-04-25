@@ -21,6 +21,9 @@ VirtualMemoryManager::VirtualMemoryManager(QString str, uint nb_pages, uint page
     cout<<"Physical Memory Initialization"<<endl;
     mPhysicalMemory = new PhysicalMemory("Physical Memory",nb_frames);
 
+    mPhysicalMemory->setPageTable(mPageTable);
+    mPhysicalMemory->setHardDrive(mHardDrive);
+
     cout<<"Translation Look-aside Buffer (TLB) Initialization"<<endl;
     mTLB = new TLB("Translation Look-aside Buffer");
 

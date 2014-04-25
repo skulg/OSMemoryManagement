@@ -43,6 +43,19 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
         return frameToInsert;
     }else{
         //FIFO
+        cout << "FIFO IS KICKING SOMEBODY OUT : " << this->mFirstInIndex << endl;
+
+        int pageToRemove    = this->mFrames[this->mFirstInIndex].pageNumber();
+
+        if(this->mFrames[pageToRemove].isModified())
+        {
+            cout << "PAGE WAS MODIFIED, MUST WRITE TO DISK !" << endl;
+
+            this->mHardDrive->write(pageToRemove, this->mFrames[pageToRemove].frameData());
+        }
+
+        this->mPageTable->setInvalid(pageToRemove);
+
         this->insertFrame(this->mFirstInIndex, page_number , frame_bytes);
         uint resultIndex =mFirstInIndex;
         this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
@@ -92,4 +105,14 @@ void PhysicalMemory::setUnModified(uint frame_number)
 bool PhysicalMemory::isFrameModified(uint frame_number)
 {
     return mFrames[frame_number].isModified();
+}
+
+void PhysicalMemory::setPageTable(PageTable *thePageTable)
+{
+    this->mPageTable    = thePageTable;
+}
+
+void PhysicalMemory::setHardDrive(HardDrive *theHardDrive)
+{
+    this->mHardDrive    = theHardDrive;
 }
