@@ -71,8 +71,19 @@ void VirtualMemoryManager::outputToLog( char* data )
 void VirtualMemoryManager::saveRAMToDisk()
 {
     //TP2_IFT2245_TO_DO
-    for (uint i=0 ; i<this->mPhysicalMemory->nbFrames();i++){
+
+    for (uint i=0 ; i < this->mPhysicalMemory->nbFrames(); i++)
+    {
+        // Let's skip writing to disk if the frame was not modified. Also prevent having a negative page number
+        // when the frame isn't used which cause assert() in frame.cpp, line 46, to raise an error.
+        if(!this->mPhysicalMemory->isFrameModified(i))
+        {
+            continue;
+        }
+
+        // Id modified, let's grad its content and write it to the disk.
         QByteArray *currentData= this->mPhysicalMemory->frame(i);
+
         this->mHardDrive->write(this->mPhysicalMemory->pageNumber(i), currentData);
     }
     //TP2_IFT2245_END_TO_DO

@@ -61,14 +61,9 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
 
         // Updating mFirstInIndex for next time FIFO must kick a page out of memory.
         this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
-<<<<<<< HEAD
 
         // Returning the frame index.
         return mFirstInIndex;
-=======
-        return resultIndex;
-
->>>>>>> FETCH_HEAD
     }
 
     //TP2_IFT2245_END_TO_DO
@@ -81,7 +76,10 @@ void PhysicalMemory::insertFrame(uint frame_number, uint page_number, QByteArray
     //have saved the data.
     this->mFrames[frame_number].setFrameData(frame_bytes);
     this->mFrames[frame_number].setPageNumber(page_number);
-
+if(page_number < 0)
+{
+    cout << "%?#&#?%&#% NEGATIVE PAGE NUMBER !! " << page_number << endl;
+}
     //TP2_IFT2245_END_TO_DO
 }
 
