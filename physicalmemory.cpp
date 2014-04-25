@@ -43,23 +43,27 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
         return frameToInsert;
     }else{
         //FIFO
-        cout << "FIFO IS KICKING SOMEBODY OUT : " << this->mFirstInIndex << endl;
 
+        // Let's get the page number to remove from physical memory.
         int pageToRemove    = this->mFrames[this->mFirstInIndex].pageNumber();
 
+        // Let's check if the frame to be removed was modified. If so, let's write it to the disk.
         if(this->mFrames[pageToRemove].isModified())
         {
-            cout << "PAGE WAS MODIFIED, MUST WRITE TO DISK !" << endl;
-
             this->mHardDrive->write(pageToRemove, this->mFrames[pageToRemove].frameData());
         }
 
+        // Now marking the page be removed as invalid.
         this->mPageTable->setInvalid(pageToRemove);
 
+        // Insert new frame. This removes the previous frame.
         this->insertFrame(this->mFirstInIndex, page_number , frame_bytes);
-        uint resultIndex =mFirstInIndex;
+
+        // Updating mFirstInIndex for next time FIFO must kick a page out of memory.
         this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
-        return resultIndex;
+
+        // Returning the frame index.
+        return mFirstInIndex;
     }
 
     //TP2_IFT2245_END_TO_DO

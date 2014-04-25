@@ -67,8 +67,9 @@ void HardDrive::write(uint page_number, const QByteArray *bytes)
     assert(bytes->size() == (int)mPageSize);
 
     if (mHDFile->seek(page_number*mPageSize))
-    {  
+    {
         mHDFile->write(*bytes);
+        mHDFile->flush();
 
         // Added, otherwise last write() was not written... ??!!
         mHDFile->seek(0);

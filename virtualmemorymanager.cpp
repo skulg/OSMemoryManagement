@@ -21,6 +21,8 @@ VirtualMemoryManager::VirtualMemoryManager(QString str, uint nb_pages, uint page
     cout<<"Physical Memory Initialization"<<endl;
     mPhysicalMemory = new PhysicalMemory("Physical Memory",nb_frames);
 
+    // We are cheating a bit : we pass the page table and the hard drive to the physical memory to make it
+    // easier to update them when a frame (page) must be removed form memory and written on disk.
     mPhysicalMemory->setPageTable(mPageTable);
     mPhysicalMemory->setHardDrive(mHardDrive);
 
@@ -71,7 +73,7 @@ void VirtualMemoryManager::saveRAMToDisk()
     //TP2_IFT2245_TO_DO
     for (uint i=0 ; i<this->mPhysicalMemory->nbFrames();i++){
         QByteArray *currentData= this->mPhysicalMemory->frame(i);
-        this->mHardDrive->write(i , currentData);
+        this->mHardDrive->write(this->mPhysicalMemory->pageNumber(i), currentData);
     }
     //TP2_IFT2245_END_TO_DO
 }

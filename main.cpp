@@ -83,11 +83,11 @@ int main(/*int argc, char *argv[]*/)
         Command c("Command",action_type,i,frameIndex, random_chars );
         cmd_manager.insertCommand(c);
 
-        if(0 == i)
-        {
-            Command cz("Command",Command::WRITE,i,frameIndex, '@');
+
+            Command cz("Command",Command::WRITE,i,0, '@');
             cmd_manager.insertCommand(cz);
-        }
+
+
     }
     // miss
     Command c1("Command",Command::READ,0,rand()%256, 'x');
