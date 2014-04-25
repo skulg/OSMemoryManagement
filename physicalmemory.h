@@ -104,7 +104,7 @@ private :
     uint mNextEmptyFrame;
     uint mFirstInIndex;
     Frame *mFrames;
-
+    bool fifo;
     PageTable * mPageTable;
     HardDrive * mHardDrive;
 };

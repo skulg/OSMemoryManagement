@@ -13,6 +13,7 @@ public:
     uint frameIndex();
     void setInvalid();
     bool isValid();
+    uint getNbAccess();
 protected:
     Page();
 private:
@@ -20,6 +21,7 @@ private:
     uint mPageSize;
     uint mFrameIndex;
     bool mValid;
+    uint nbAccess;
 };
 
 #endif // PAGE_H

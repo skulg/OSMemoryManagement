@@ -4,6 +4,7 @@ PhysicalMemory::PhysicalMemory(QString str, uint nb_frames):TObject(str),mNbFram
 {
     mFrames = new Frame[nb_frames];
     mFirstInIndex = 0 ;
+    fifo=false;
 }
 
 PhysicalMemory::~PhysicalMemory()
@@ -27,8 +28,8 @@ void PhysicalMemory::read(uint frame_number, uint offset, char * data)
 void PhysicalMemory::write(uint frame_number, uint offset, char * data)
 {
     //TP2_IFT2245_TO_DO
-        this->mFrames[frame_number].write(offset,data);
-        this->mFrames[frame_number].setModified();
+    this->mFrames[frame_number].write(offset,data);
+    this->mFrames[frame_number].setModified();
     //TP2_IFT2245_END_TO_DO
 }
 
@@ -41,29 +42,44 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
         this->insertFrame(frameToInsert, page_number , frame_bytes);
         this->mNextEmptyFrame++;
         return frameToInsert;
-    }else{
-        //FIFO
-        cout << "FIFO IS KICKING SOMEBODY OUT : " << this->mFirstInIndex << endl;
+    }else{ if (this->fifo){
 
-        int pageToRemove    = this->mFrames[this->mFirstInIndex].pageNumber();
-
-        if(this->mFrames[pageToRemove].isModified())
-        {
-            cout << "PAGE WAS MODIFIED, MUST WRITE TO DISK !" << endl;
-
-            this->mHardDrive->write(pageToRemove, this->mFrames[pageToRemove].frameData());
+            //FIFO
+            cout << "FIFO IS KICKING SOMEBODY OUT : " << this->mFirstInIndex << endl;
+            int pageToRemove    = this->mFrames[this->mFirstInIndex].pageNumber();
+            if(this->mFrames[pageToRemove].isModified())
+            {
+                cout << "PAGE WAS MODIFIED, MUST WRITE TO DISK !" << endl;
+                this->mHardDrive->write(pageToRemove, this->mFrames[pageToRemove].frameData());
+            }
+            this->mPageTable->setInvalid(pageToRemove);
+            this->insertFrame(this->mFirstInIndex, page_number , frame_bytes);
+            uint resultIndex =mFirstInIndex;
+            this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
+            return resultIndex;
+        }else{
+            //Less Frequently used
+            int leastFrequentlyAccessNb=mPageTable->getPagenbAccess(this->mFrames[0].mPageNumber);
+            uint leastFrequentlyFrameIndex =0 ;
+            for (int i =0 ;i<this->nbFrames();i++){
+                int currentPageNbAccess =mPageTable->getPagenbAccess(this->mFrames[i].mPageNumber);
+                if (currentPageNbAccess<leastFrequentlyAccessNb){
+                    leastFrequentlyFrameIndex=i;
+                }
+            }
+            int pageToRemove   = this->mFrames[leastFrequentlyFrameIndex].pageNumber();
+            if(this->mFrames[pageToRemove].isModified())
+            {
+                this->mHardDrive->write(pageToRemove, this->mFrames[pageToRemove].frameData());
+            }
+            this->mPageTable->setInvalid(pageToRemove);
+            this->insertFrame(leastFrequentlyFrameIndex,page_number,frame_bytes);
+            return leastFrequentlyFrameIndex;
         }
-
-        this->mPageTable->setInvalid(pageToRemove);
-
-        this->insertFrame(this->mFirstInIndex, page_number , frame_bytes);
-        uint resultIndex =mFirstInIndex;
-        this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
-        return resultIndex;
-
     }
-
     //TP2_IFT2245_END_TO_DO
+
+
 }
 
 void PhysicalMemory::insertFrame(uint frame_number, uint page_number, QByteArray *frame_bytes)

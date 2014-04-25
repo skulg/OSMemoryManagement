@@ -1,7 +1,7 @@
 #include "page.h"
 
 Page::Page(QString str, int page_number, uint page_size, int frame_index, uint valid):
-    TObject(str),mPageNumber(page_number),mPageSize(page_size),mFrameIndex(frame_index),mValid(valid)
+    TObject(str),mPageNumber(page_number),mPageSize(page_size),mFrameIndex(frame_index),mValid(valid),nbAccess(0)
 {
 
 }
@@ -22,6 +22,11 @@ Page::~Page()
 uint Page::frameIndex()
 {
     return mFrameIndex;
+}
+
+uint Page::getNbAccess()
+{
+    return this->nbAccess;
 }
 
 void Page::setInvalid()

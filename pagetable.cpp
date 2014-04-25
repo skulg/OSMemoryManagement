@@ -29,6 +29,7 @@ bool PageTable::frameIndex(uint page_number, int& frame_index)
     //TP2_IFT2245_TO_DO
     //BEGAN NOT TESTED
     if (this->mPages[page_number].isValid()){
+        this->mPages[page_number].nbAccess++;
         frame_index=this->mPages[page_number].mFrameIndex;
         return true;
     }
@@ -41,4 +42,6 @@ void PageTable::setInvalid(uint page_number)
     mPages[page_number].setInvalid();
 }
 
-
+int PageTable::getPagenbAccess(uint page_number){
+    return mPages[page_number].nbAccess;
+}

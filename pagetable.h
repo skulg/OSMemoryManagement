@@ -12,7 +12,7 @@ public:
     ~PageTable();
 
     uint nbPages() const;
-
+    int getPagenbAccess(uint page_number);
     //TP2_IFT2245_TO_DO
     /**
      * @brief insertPage

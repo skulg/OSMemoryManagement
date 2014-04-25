@@ -110,12 +110,12 @@ void VirtualMemoryManager::write(uint page_number, uint offset, char *data)
 
 uint VirtualMemoryManager::fetchPage(uint page_number)
 {
+
     //TP2_IFT2245_TO_DO
     int frameIndexSearchResult;
     if (this->mTLB->findPage(page_number,frameIndexSearchResult)){
         this->TLBHIT++;
         this->PAGEFOUND++;
-
         return frameIndexSearchResult;
     }else{
         this->TLBMISS++;
@@ -140,8 +140,6 @@ uint VirtualMemoryManager::fetchPage(uint page_number)
         }
 
     }
-
-
 
     return 0;
     //TP2_IFT2245_END_TO_DO
