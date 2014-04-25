@@ -77,15 +77,6 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
             return leastFrequentlyFrameIndex;
         }
 
-        // Now marking the page be removed as invalid.
-        this->mPageTable->setInvalid(pageToRemove);
-
-        // Insert new frame. This removes the previous frame.
-        this->insertFrame(this->mFirstInIndex, page_number , frame_bytes);
-        uint resultIndex =mFirstInIndex;
-        this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
-        return resultIndex;
-
     }
 
     //TP2_IFT2245_END_TO_DO
