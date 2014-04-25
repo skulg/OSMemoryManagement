@@ -17,7 +17,7 @@ public:
         int frameNumber;
         TLB_entry(int pNum = -1, int fNum = -1)
             :pageNumber(pNum), frameNumber(fNum){}
-                            } TLB_entry;
+    } TLB_entry;
 
 public:
     TLB(QString str);
