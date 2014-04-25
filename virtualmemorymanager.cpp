@@ -114,8 +114,6 @@ void VirtualMemoryManager::write(uint page_number, uint offset, char *data)
 
     int frameNumberInMemory  = fetchPage(page_number);
 
-    cout << "Page number is " << frameNumberInMemory << endl;
-
     this->mPhysicalMemory->write(frameNumberInMemory, offset, data);
 
     //TP2_IFT2245_END_TO_DO

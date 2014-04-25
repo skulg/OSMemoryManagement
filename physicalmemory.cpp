@@ -45,11 +45,10 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
     }else{ if (this->fifo){
 
             //FIFO
-            cout << "FIFO IS KICKING SOMEBODY OUT : " << this->mFirstInIndex << endl;
+
             int pageToRemove    = this->mFrames[this->mFirstInIndex].pageNumber();
             if(this->mFrames[pageToRemove].isModified())
             {
-                cout << "PAGE WAS MODIFIED, MUST WRITE TO DISK !" << endl;
                 this->mHardDrive->write(pageToRemove, this->mFrames[pageToRemove].frameData());
             }
             this->mPageTable->setInvalid(pageToRemove);

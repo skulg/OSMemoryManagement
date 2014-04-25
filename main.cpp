@@ -16,7 +16,7 @@ int main(/*int argc, char *argv[]*/)
 
     cout<<"\n##############################\n\nCreating Commands"<<endl;
 
-    int nb_commands = 300;
+    int nb_commands = 10000;
 
     char random_chars;
 
