@@ -116,17 +116,22 @@ uint VirtualMemoryManager::fetchPage(uint page_number)
         this->TLBMISS++;
         if(this->mPageTable->frameIndex(page_number , frameIndexSearchResult)){
             this->PAGEFOUND++;
+            TLB::TLB_entry myEntry(page_number, frameIndexSearchResult);
+            this->mTLB->addTLBEntry(myEntry);
+            //TLB::TLB_entry myEntry(page_number, frameIndexSearchResult);
+            //this->mTLB->addTLBEntry(*myEntry);
             return frameIndexSearchResult;
         }else{
             this->PAGEFAULT++;
             //Fetch from hardrive
             QByteArray *data= this->mHardDrive->read(page_number);
 
-            int frameIndex123 =  this->mPhysicalMemory->insertFrameInNextFreeSpace(page_number, data);
-            Page* myPage = new Page("page", page_number, this->mPageSize, frameIndex123, true);
+            frameIndexSearchResult =  this->mPhysicalMemory->insertFrameInNextFreeSpace(page_number, data);
+            Page* myPage = new Page("page", page_number, this->mPageSize, frameIndexSearchResult, true);
             this->mPageTable->insertPage(page_number, *myPage);
-
-            return frameIndex123;
+            TLB::TLB_entry myEntry(page_number, frameIndexSearchResult);
+            this->mTLB->addTLBEntry(myEntry);
+            return frameIndexSearchResult;
         }
 
     }
