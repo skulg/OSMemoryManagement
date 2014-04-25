@@ -65,9 +65,13 @@ void HardDrive::write(uint page_number, const QByteArray *bytes)
 {
     assert(page_number<mNbPages);
     assert(bytes->size() == (int)mPageSize);
+
     if (mHDFile->seek(page_number*mPageSize))
-    {
+    {  
         mHDFile->write(*bytes);
+
+        // Added, otherwise last write() was not written... ??!!
+        mHDFile->seek(0);
     }else{
         assert(false);
         cerr<<"Seek position too large"<<endl;
