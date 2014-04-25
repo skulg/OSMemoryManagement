@@ -78,7 +78,8 @@ int main(/*int argc, char *argv[]*/)
             action_type = Command::WRITE;
             random_chars =  (char)(rand() % ('z' - 'a' + 1) + 'a');
         }
-        Command c("Command",action_type,( (rand()%32))*(rand()%16),rand()%256, random_chars );
+        //Command c("Command",action_type,( (rand()%32))*(rand()%16),rand()%256, random_chars );
+        Command c("Command",action_type,0,rand()%256, random_chars );
         cmd_manager.insertCommand(c);
     }
     cmd_manager.applyCommands();

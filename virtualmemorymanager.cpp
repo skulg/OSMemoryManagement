@@ -79,11 +79,11 @@ void VirtualMemoryManager::read(uint page_number, uint offset, char *data)
     cout<<"Read Operation : ";
     //TP2_IFT2245_TO_DO
 
-    int pageNumberInMemory  = fetchPage(page_number);
+    int frameNumberInMemory  = fetchPage(page_number);
 
-    this->mPhysicalMemory->read(pageNumberInMemory, offset, data);
+    this->mPhysicalMemory->read(frameNumberInMemory, offset, data);
 
-    cout << "Page number is " << pageNumberInMemory << endl;
+    cout << "Page number is " << frameNumberInMemory << endl;
 
     //TP2_IFT2245_END_TO_DO
 
@@ -96,11 +96,11 @@ void VirtualMemoryManager::write(uint page_number, uint offset, char *data)
     cout<<"Write Operation : ";
     //TP2_IFT2245_TO_DO
 
-    int pageNumberInMemory  = fetchPage(page_number);
+    int frameNumberInMemory  = fetchPage(page_number);
 
-    cout << "Page number is " << pageNumberInMemory << endl;
+    cout << "Page number is " << frameNumberInMemory << endl;
 
-    this->mPhysicalMemory->write(pageNumberInMemory, offset, data);
+    this->mPhysicalMemory->write(frameNumberInMemory, offset, data);
 
     //TP2_IFT2245_END_TO_DO
 }
@@ -121,7 +121,12 @@ uint VirtualMemoryManager::fetchPage(uint page_number)
             this->PAGEFAULT++;
             //Fetch from hardrive
             QByteArray *data= this->mHardDrive->read(page_number);
-            return this->mPhysicalMemory->insertFrameInNextFreeSpace(page_number, data);
+
+            int frameIndex123 =  this->mPhysicalMemory->insertFrameInNextFreeSpace(page_number, data);
+            Page* myPage = new Page("page", page_number, this->mPageSize, frameIndex123, true);
+            this->mPageTable->insertPage(page_number, *myPage);
+
+            return frameIndex123;
         }
 
     }
