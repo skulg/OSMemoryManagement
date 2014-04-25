@@ -47,6 +47,7 @@ uint PhysicalMemory::insertFrameInNextFreeSpace(uint page_number, QByteArray *fr
         uint resultIndex =mFirstInIndex;
         this->mFirstInIndex= this->mFirstInIndex + 1 % this->nbFrames();
         return resultIndex;
+
     }
 
     //TP2_IFT2245_END_TO_DO
@@ -59,6 +60,7 @@ void PhysicalMemory::insertFrame(uint frame_number, uint page_number, QByteArray
     //have saved the data.
     this->mFrames[frame_number].setFrameData(frame_bytes);
     this->mFrames[frame_number].setPageNumber(page_number);
+
     //TP2_IFT2245_END_TO_DO
 }
 
