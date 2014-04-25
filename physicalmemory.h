@@ -3,6 +3,8 @@
 
 #include <object.h>
 #include <frame.h>
+#include <pagetable.h>
+#include <harddrive.h>
 
 class PhysicalMemory:public TObject
 {
@@ -93,11 +95,18 @@ public:
      */
     bool isFrameModified(uint frame_number);
 
+    void setPageTable(PageTable *thePageTable);
+
+    void setHardDrive(HardDrive *theHardDrive);
+
 private :
     uint mNbFrames;
     uint mNextEmptyFrame;
     uint mFirstInIndex;
     Frame *mFrames;
+
+    PageTable * mPageTable;
+    HardDrive * mHardDrive;
 };
 
 #endif // PHYSICALMEMORY_H
