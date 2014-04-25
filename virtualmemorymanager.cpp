@@ -116,6 +116,8 @@ uint VirtualMemoryManager::fetchPage(uint page_number)
     int frameIndexSearchResult;
     if (this->mTLB->findPage(page_number,frameIndexSearchResult)){
         this->TLBHIT++;
+        this->PAGEFOUND++;
+
         return frameIndexSearchResult;
     }else{
         this->TLBMISS++;

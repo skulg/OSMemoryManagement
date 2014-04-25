@@ -68,7 +68,7 @@ int main(/*int argc, char *argv[]*/)
     CommandManager cmd_manager;
 
     cout<<"Creating Commands"<<endl;
-    int nb_commands = 265;//3;
+    int nb_commands = 500;
     char random_chars;
     for(int i=0; i < nb_commands; ++i)
     {
