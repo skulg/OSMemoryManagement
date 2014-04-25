@@ -7,15 +7,16 @@ typedef VirtualMemoryManager VMM;
 
 int main(/*int argc, char *argv[]*/)
 {
+    cout<<"\n##############################\n\nVirtual Memory Manager\n\nKevin Forand\nHubert Lemelin"<<endl;
     srand(2245);
     qsrand(QTime::currentTime().msec());
     cout<<"\n##############################\n\nStarting Virtual Memory Manager ..."<<endl;
 
     CommandManager cmd_manager;
 
-    cout<<"Creating Commands"<<endl;
+    cout<<"\n##############################\n\nCreating Commands"<<endl;
 
-    int nb_commands = 500;
+    int nb_commands = 300;
 
     char random_chars;
 
@@ -35,18 +36,16 @@ int main(/*int argc, char *argv[]*/)
 
     cmd_manager.applyCommands();
 
-    // TEMP
-    cout << " TLB_HIT : " << VMM::TLBHIT << endl;
-    cout << " TLB_MISS : " << VMM::TLBMISS << endl;
-    cout << " PAGEFAULT : " << VMM::PAGEFAULT << endl;
-    cout << " PAGEFOUND : " << VMM::PAGEFOUND << endl;
-    // END TEMP
+    cout << "STATISTICS\n" << endl;
 
-    /*Printing static TBLHIT and PAGEFAULT counter from VirtualMemoryManager*/
-    cout << "TLB hit ratio: " << VMM::TLBHIT / (VMM::TLBHIT+VMM::TLBMISS)
-         << "; Page fault ratio: " << VMM::PAGEFAULT / (VMM::PAGEFAULT + VMM::PAGEFOUND) <<endl;
+    cout << "   TLB_HIT       : " << VMM::TLBHIT << endl;
+    cout << "   TLB_MISS      : " << VMM::TLBMISS << endl;
+    cout << "   TLB hit ratio : " << VMM::TLBHIT / (VMM::TLBHIT+VMM::TLBMISS) << "\n" << endl;
+    cout << "   PAGEFAULT        : " << VMM::PAGEFAULT << endl;
+    cout << "   PAGEFOUND        : " << VMM::PAGEFOUND << endl;
+    cout << "   Page fault ratio : " << VMM::PAGEFAULT / (VMM::PAGEFAULT + VMM::PAGEFOUND) <<endl;
 
-    cout << "Exiting Virtual Memory Manager" << endl;
+    cout << "\n##############################\n\nExiting Virtual Memory Manager\n\n##############################" << endl;
 
     return 0;
 }

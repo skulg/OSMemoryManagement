@@ -25,4 +25,6 @@ void Command::apply(VirtualMemoryManager *vmm)
         cerr<<"WRONG COMMAND"<<endl;
         assert(false);
     }
+
+    cout << "\n##############################\n" << endl;
 }

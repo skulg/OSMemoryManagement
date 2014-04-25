@@ -20,7 +20,7 @@ void CommandManager::clearAllCommands()
 
 void CommandManager::applyCommands()
 {
-    cout<<"Applying commands"<<endl;
+    cout<<"\n##############################\n\nApplying commands\n\n##############################\n"<<endl;
     CommandList::iterator cmdit;
     for(cmdit = mCommandList.begin();
         cmdit != mCommandList.end(); ++cmdit)
